@@ -240,7 +240,7 @@ configs = config_util.get_configs_from_pipeline_file(pipeline_config)
 #getting the configuration of the model
 model_config = configs['model']
 model_config.ssd.num_classes = 1
-model_config.ssd.freeze_batchnorm = True
+model_config.ssd.freeze_batchnorm = #True of False, choose whatever has the fastest training time
 
 #bulding the model based on the configuration
 detection_model = model_builder.build(model_config=model_config, is_training=False)

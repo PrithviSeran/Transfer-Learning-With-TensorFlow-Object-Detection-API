@@ -105,12 +105,9 @@ def get_model_train_step_function(model, optimizer, trainable_layers):
   
   return train_step_fn
 
-# trains an already-trained model from the object-detection
 def transfer_learning(model, ground_truth_boxes, ground_truth_classes, optimizer, ckpt_path, ordered_images):
   fake_box_predictor = tf.compat.v2.train.Checkpoint(
     _base_tower_layers_for_heads=detection_model._box_predictor._base_tower_layers_for_heads,
-    #_prediction_heads=detection_model._box_predictor._prediction_heads,
-    #    (i.e., the classification head that we *will not* restore)
     _box_prediction_head=detection_model._box_predictor._box_prediction_head,
     )
 
@@ -145,8 +142,6 @@ def transfer_learning(model, ground_truth_boxes, ground_truth_classes, optimizer
   model.provide_groundtruth(groundtruth_boxes_list = ground_truth_boxes,
             groundtruth_classes_list = ground_truth_classes)
 
-  #optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=0.01)
-
   train_step_fn = get_model_train_step_function(model, optimizer, trainable_layers)
 
   for i in range(100):
@@ -159,12 +154,6 @@ def transfer_learning(model, ground_truth_boxes, ground_truth_classes, optimizer
 
 #if in eval_config it specificies keypoint edges, returns (star, end) of the keypoints. (Used for landmark detections)
 def get_keypoint_tuples(eval_config):
-   """Return a tuple list of keypoint edges from the eval config.
-    Args:
-     eval_config: an eval config containing the keypoint edges
-    Returns:
-     a list of edge tuples, each in the format (start, end)
-   """
    tuple_list = []
    kp_list = eval_config.keypoint_edge
    for edge in kp_list:
@@ -173,8 +162,6 @@ def get_keypoint_tuples(eval_config):
 
 #returns the dimensions and coordinates of the bounding boxes produced by the model
 def get_model_detection_function(model):
-
-    """Get a tf.function for detection."""
     @tf.function
     def detect_fn(image):
         """Detect objects in image."""
@@ -239,7 +226,7 @@ def get_predictions(model, category_index, input_image):
   img.show()
 
 #getting the ordered images for training/testing
-ordered_images = open_images("data/test_labels.csv")
+ordered_images = open_images("CSV FILE THAT SPECIFIES THE ORDER THE IMAGES NEED TO BE OPENED WITH")
 
 #path of the .config file
 pipeline_config = "ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config" 

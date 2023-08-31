@@ -24,10 +24,10 @@ ground_truth_classes = []
 test_image = None
 
 #opens images from the order specified in a csv file (see README file)
-def open_images(image_path):
+def open_images(image_order_path):
   global test_image
   ordered_images = []
-  with open(image_path, 'r') as file:
+  with open(image_order_path, 'r') as file:
     csvreader = csv.reader(file)
     for row in csvreader: 
 

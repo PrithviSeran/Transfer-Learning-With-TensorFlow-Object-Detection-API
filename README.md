@@ -8,11 +8,11 @@ The object_detection.py file has the code you need to train an object detection 
 
 
 ### CSV Format
-**filename, image_width, image_height, class, xmin, ymin, xmax, ymax**
-image_1
-image_2
-image_3
-.
-.
-.
+**filename, image_width, image_height, class, xmin, ymin, xmax, ymax**__
+image_1__
+image_2__
+image_3__
+.__
+.__
+.__
 image_n
